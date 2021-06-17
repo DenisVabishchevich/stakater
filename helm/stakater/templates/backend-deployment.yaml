@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.backend.name}}-deplyment
+  namespace: {{.Values.metadata.namespace}}
+  labels:
+    app: {{.Values.backend.name}}
+spec:
+  replicas: {{.Values.backend.replicas}}
+  template:
+    metadata:
+      name: {{.Values.backend.name}}
+      namespace: {{.Values.metadata.namespace}}
+      labels:
+        app: {{.Values.backend.name}}
+    spec:
+      containers:
+        - name: backend
+          image: {{.Values.backend.image}}:{{.Values.backend.tag}}
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{.Values.backend.name}}-cm
+                  key: name
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: {{.Values.backend.name}}
+
+

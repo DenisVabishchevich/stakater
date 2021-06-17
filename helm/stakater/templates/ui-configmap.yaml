@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.ui.name}}-cm
+  namespace: {{.Values.metadata.namespace}}
+data:
+  backend.host: "http://{{.Values.backend.name}}-svc"
+  backend.port: "{{.Values.backend.service.port}}"

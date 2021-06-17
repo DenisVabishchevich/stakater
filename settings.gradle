@@ -1,0 +1,4 @@
+rootProject.name = 'stakater'
+include 'service'
+include 'vaadin-ui'
+

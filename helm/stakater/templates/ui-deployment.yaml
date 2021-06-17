@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.ui.name}}-deplyment
+  namespace: {{.Values.metadata.namespace}}
+  labels:
+    app: {{.Values.ui.name}}
+spec:
+  replicas: {{.Values.ui.replicas}}
+  template:
+    metadata:
+      name: {{.Values.ui.name}}
+      namespace: {{.Values.metadata.namespace}}
+      labels:
+        app: {{.Values.ui.name}}
+    spec:
+      containers:
+        - name: ui
+          image: {{.Values.ui.image}}:{{.Values.ui.tag}}
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8081
+          env:
+            - name: BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{.Values.ui.name}}-cm
+                  key: backend.host
+            - name: BACKEND_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{.Values.ui.name}}-cm
+                  key: backend.port
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: {{.Values.ui.name}}
+
+

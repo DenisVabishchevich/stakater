@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.backend.name}}-cm
+  namespace: {{.Values.metadata.namespace}}
+data:
+  name: Stakater

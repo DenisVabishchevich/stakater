@@ -1,0 +1,14 @@
+metadata:
+  namespace: stakater
+backend:
+  service:
+    port: 80
+  replicas: 1
+  name: stakater-backend
+  image: stakater-backend
+  tag: latest
+ui:
+  replicas: 1
+  name: stakater-ui
+  image: stakater-ui
+  tag: latest
